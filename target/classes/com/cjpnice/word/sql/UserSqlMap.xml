@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+ 
+<mapper namespace="com.cjpnice.word.dao.UserDao">
+	<!-- 缓存配置-->
+	<cache eviction="LRU" flushInterval="30000" size="512" readOnly="true"/>
+
+
+	<!-- 查看用户今天是否已经背过-->
+	<select id="selectTodayIsRecite" parameterType="int" resultType="int">
+		select todayIsRecite from user where userId=#{userId}
+	</select>
+
+    <!--登陆查询，根据用户名和密码，查询用户-->
+	<select id="selectUserByNameAndPassword" resultType="com.cjpnice.word.entity.User">
+		select * from user where username=#{0} and password=#{1}
+	</select>
+
+
+
+
+
+
+</mapper>

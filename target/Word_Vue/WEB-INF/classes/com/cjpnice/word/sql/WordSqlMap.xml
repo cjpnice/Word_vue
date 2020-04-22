@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+ 
+<mapper namespace="com.cjpnice.word.dao.WordDao">
+	<!-- 缓存配置-->
+	<cache eviction="LRU" flushInterval="30000" size="512" readOnly="true"/>
+
+
+
+
+
+
+</mapper>
