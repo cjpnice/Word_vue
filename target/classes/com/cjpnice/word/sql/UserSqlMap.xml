@@ -17,7 +17,10 @@
 		select * from user where username=#{0} and password=#{1}
 	</select>
 
-
+	<!--新增用户-->
+	<insert id="addUser" parameterType="com.cjpnice.word.entity.User" useGeneratedKeys="true" keyProperty="userId">
+		insert into user (username,todayIsRecite,password,email) values(#{username},#{todayIsRecite},#{password},#{email})
+	</insert>
 
 
 
