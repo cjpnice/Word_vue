@@ -22,6 +22,10 @@
 		insert into user (username,todayIsRecite,password,email) values(#{username},#{todayIsRecite},#{password},#{email})
 	</insert>
 
+	<!--按照用户名查找-->
+	<select id="selectUserByName" parameterType="string" resultType="com.cjpnice.word.entity.User">
+		select * from user where username=#{username}
+	</select>
 
 
 
