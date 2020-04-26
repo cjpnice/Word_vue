@@ -12,6 +12,7 @@ public class Word implements Serializable {
     private String translation;
     private String phonogram;
     private Integer forgetTime;
+    private Integer reciteTime;
 
     @Override
     public String toString() {
@@ -22,7 +23,16 @@ public class Word implements Serializable {
                 ", translation='" + translation + '\'' +
                 ", phonogram='" + phonogram + '\'' +
                 ", forgetTime=" + forgetTime +
+                ", reciteTime=" + reciteTime +
                 '}';
+    }
+
+    public Integer getReciteTime() {
+        return reciteTime;
+    }
+
+    public void setReciteTime(Integer reciteTime) {
+        this.reciteTime = reciteTime;
     }
 
     public Integer getId() {

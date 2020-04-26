@@ -6,6 +6,33 @@
 	<!-- 缓存配置-->
 	<cache eviction="LRU" flushInterval="30000" size="512" readOnly="true"/>
 
+	<!--创建用户单词表-->
+	<update id="createNewTable" parameterType="String">
+		CREATE TABLE IF NOT EXISTS ${tableName} (
+			  id int(10) unsigned NOT NULL AUTO_INCREMENT,
+			  word varchar(255) NOT NULL,
+			  translation varchar(255) NOT NULL,
+			  phonogram varchar(255) NOT NULL,
+			  forgetTime int(11) DEFAULT '0',
+			  isRemember int(11) DEFAULT '0',
+			  reciteTime int(11) DEFAULT '0',
+			  PRIMARY KEY (id)
+		)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+	</update>
+
+	<!--查询单词-->
+	<select id="selectWord" resultMap="wordMap">
+		SELECT * from ${tableName} WHERE isRemember=0 LIMIT #{wordNum}
+	</select>
+	<resultMap type="com.cjpnice.word.entity.Word" id="wordMap">
+		<id property="id" column="id"/>
+		<result property="word" column="word"/>
+		<result property="isRemember" column="isRemember"/>
+		<result property="translation" column="translation"/>
+		<result property="phonogram" column="phonogram"/>
+		<result property="forgetTime" column="forgetTime"/>
+		<result property="reciteTime" column="reciteTime"/>
+	</resultMap>
 
 
 

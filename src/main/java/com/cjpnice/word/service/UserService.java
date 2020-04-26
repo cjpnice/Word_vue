@@ -7,7 +7,8 @@ import com.cjpnice.word.util.Result;
 import java.util.Map;
 
 public interface UserService {
-    public Result selectUserByNameAndPassword(String username,String password);
-    public Result addUser(User user);
-    public Result selectUserByName(String username);
+    Result selectUserByNameAndPassword(String username,String password);
+    Result addUser(User user);
+    Result selectUserByName(String username);
+    Result setWordNum(int wordNum,int userId);
 }

@@ -67,4 +67,18 @@ public class UserServiceImpl implements UserService {
         }
         return result;
     }
+
+    @Override
+    public Result setWordNum(int wordNum, int userId) {
+        Result result = new Result();
+        int status = userDao.setWordNum(wordNum,userId);
+        if(status==1){
+            result.setMsg("设置成功");
+            result.setStatus(0);
+        }else{
+            result.setMsg("设置失败");
+            result.setStatus(1);
+        }
+        return result;
+    }
 }

@@ -27,6 +27,11 @@
 		select * from user where username=#{username}
 	</select>
 
+	<!--设置每日背诵单词数-->
+	<update id="setWordNum" >
+		update user set wordNum=#{wordNum} where userId=#{userId}
+	</update>
+
 
 
 </mapper>

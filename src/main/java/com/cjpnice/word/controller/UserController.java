@@ -2,6 +2,7 @@ package com.cjpnice.word.controller;
 
 import com.cjpnice.word.entity.User;
 import com.cjpnice.word.service.UserService;
+import com.cjpnice.word.service.WordService;
 import com.cjpnice.word.util.Result;
 import com.cjpnice.word.util.TokenSign;
 import okio.ByteString;
@@ -19,6 +20,8 @@ import javax.servlet.http.HttpServletRequest;
 public class UserController {
     @Resource
     UserService userService;
+    @Resource
+    WordService wordService;
     @RequestMapping(value = "/login",method= RequestMethod.POST)
     @ResponseBody
     public Result login(String username, String password, HttpServletRequest request){
@@ -38,9 +41,13 @@ public class UserController {
         String passwordMd5 = passwordByteString.md5().hex();
         Result result = userService.selectUserByNameAndPassword(username,passwordMd5);
         if(result.getStatus()==0){
+            User user = (User) result.getData();
+            //创建用户表，sql语句已经判断表是否存在
+            wordService.createNewTable("wordList"+user.getUserId());
+            //创建token
             String token = TokenSign.sign(username,password);
-            result.setMsg("登陆成功");
-            result.setData(token);
+            result.setMsg(token);
+            result.setData(user);
         }else{
             result.setMsg("登陆失败");
         }
@@ -74,4 +81,11 @@ public class UserController {
         return result;
     }
 
+    @RequestMapping(value = "/setWordNum",method= RequestMethod.POST)
+    @ResponseBody
+    public Result setWordNum(int wordNum,int userId){
+        Result result = new Result();
+        result = userService.setWordNum(wordNum,userId);
+        return result;
+    }
 }

@@ -11,6 +11,7 @@ public class User implements Serializable {
     private Integer todayIsRecite;
     private String password;
     private String email;
+    private Integer wordNum;
 
     @Override
     public String toString() {
@@ -20,8 +21,18 @@ public class User implements Serializable {
                 ", todayIsRecite=" + todayIsRecite +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
+                ", wordNum=" + wordNum +
                 '}';
     }
+
+    public Integer getWordNum() {
+        return wordNum;
+    }
+
+    public void setWordNum(Integer wordNum) {
+        this.wordNum = wordNum;
+    }
+
 
     public Integer getUserId() {
         return userId;
