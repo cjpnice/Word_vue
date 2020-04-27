@@ -24,4 +24,29 @@ public class WordController {
         result = wordService.selectWord(tableName,wordNum);
         return result;
     }
+    @RequestMapping(value = "/setIsRemember",method= RequestMethod.POST)
+    @ResponseBody
+    public Result setIsRemember(int userId, int id){
+        Result result = new Result();
+        String tableName = "wordList"+userId;
+        result = wordService.setIsRemember(tableName,id);
+        return result;
+    }
+    @RequestMapping(value = "/setForgetTime",method= RequestMethod.POST)
+    @ResponseBody
+    public Result setForgetTime(int userId, int id){
+        Result result = new Result();
+        String tableName = "wordList"+userId;
+        int time = (int) wordService.selectForgetTime(tableName,id).getData()+1;
+        result = wordService.setForgetTime(tableName,time,id);
+        return result;
+    }
+    @RequestMapping(value = "/getForgetWord",method= RequestMethod.POST)
+    @ResponseBody
+    public Result getForgetWord(int userId){
+        Result result = new Result();
+        String tableName = "wordList"+userId;
+        result = wordService.selectForgetWord(tableName);
+        return result;
+    }
 }

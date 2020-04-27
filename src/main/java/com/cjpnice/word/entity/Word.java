@@ -13,6 +13,7 @@ public class Word implements Serializable {
     private String phonogram;
     private Integer forgetTime;
     private Integer reciteTime;
+    private String exampleSentence;
 
     @Override
     public String toString() {
@@ -24,7 +25,16 @@ public class Word implements Serializable {
                 ", phonogram='" + phonogram + '\'' +
                 ", forgetTime=" + forgetTime +
                 ", reciteTime=" + reciteTime +
+                ", exampleSentence='" + exampleSentence + '\'' +
                 '}';
+    }
+
+    public String getExampleSentence() {
+        return exampleSentence;
+    }
+
+    public void setExampleSentence(String exampleSentence) {
+        this.exampleSentence = exampleSentence;
     }
 
     public Integer getReciteTime() {

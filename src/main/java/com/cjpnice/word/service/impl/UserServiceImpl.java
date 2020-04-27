@@ -81,4 +81,13 @@ public class UserServiceImpl implements UserService {
         }
         return result;
     }
+
+    @Override
+    public Result setTodayIsRecite(int userId) {
+        Result result = new Result();
+        userDao.setTodayIsRecite(userId);
+        result.setStatus(0);
+        result.setMsg("设置成功");
+        return result;
+    }
 }

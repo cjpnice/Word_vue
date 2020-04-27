@@ -40,4 +40,42 @@ public class WordServiceImpl implements WordService {
         return result;
 
     }
+
+    @Override
+    public Result setIsRemember(String tableName, int id) {
+        Result result = new Result();
+        wordDao.setIsRemember(tableName,id);
+        result.setMsg("更新成功");
+        result.setStatus(0);
+        return result;
+    }
+
+    @Override
+    public Result selectForgetTime(String tableName, int id) {
+        Result result = new Result();
+        int time = wordDao.selectForgetTime(tableName,id);
+        result.setData(time);
+        result.setMsg("查询成功");
+        result.setStatus(0);
+        return result;
+    }
+
+    @Override
+    public Result setForgetTime(String tableName, int time, int id) {
+        Result result = new Result();
+        wordDao.setForgetTime(tableName,time,id);
+        result.setMsg("更新成功");
+        result.setStatus(0);
+        return result;
+    }
+
+    @Override
+    public Result selectForgetWord(String tableName) {
+        Result result = new Result();
+        List<Word> wordList = wordDao.selectForgetWord(tableName);
+        result.setStatus(0);
+        result.setMsg("查询成功");
+        result.setData(wordList);
+        return result;
+    }
 }

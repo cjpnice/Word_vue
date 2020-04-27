@@ -88,4 +88,12 @@ public class UserController {
         result = userService.setWordNum(wordNum,userId);
         return result;
     }
+
+    @RequestMapping(value = "/setTodayIsRecite",method= RequestMethod.POST)
+    @ResponseBody
+    public Result setTodayIsRecite(int userId){
+        Result result = new Result();
+        result = userService.setTodayIsRecite(userId);
+        return result;
+    }
 }

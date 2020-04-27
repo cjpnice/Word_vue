@@ -11,4 +11,5 @@ public interface UserService {
     Result addUser(User user);
     Result selectUserByName(String username);
     Result setWordNum(int wordNum,int userId);
+    Result setTodayIsRecite(int userId);
 }
