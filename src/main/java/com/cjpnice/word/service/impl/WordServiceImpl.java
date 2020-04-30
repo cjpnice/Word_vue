@@ -31,9 +31,9 @@ public class WordServiceImpl implements WordService {
     }
 
     @Override
-    public Result selectWord(String tableName, int wordNum) {
+    public Result getForgetWord(String tableName, int wordNum) {
         Result result = new Result();
-        List<Word> wordList = wordDao.selectWord(tableName,wordNum);
+        List<Word> wordList = wordDao.getForgetWord(tableName,wordNum);
         result.setStatus(0);
         result.setMsg("查询成功");
         result.setData(wordList);
@@ -41,6 +41,16 @@ public class WordServiceImpl implements WordService {
 
     }
 
+    @Override
+    public Result getRememberWord(String tableName, int wordNum) {
+        Result result = new Result();
+        List<Word> wordList = wordDao.getRememberWord(tableName,wordNum);
+        result.setStatus(0);
+        result.setMsg("查询成功");
+        result.setData(wordList);
+        return result;
+
+    }
     @Override
     public Result setIsRemember(String tableName, int id) {
         Result result = new Result();
@@ -59,11 +69,29 @@ public class WordServiceImpl implements WordService {
         result.setStatus(0);
         return result;
     }
+    @Override
+    public Result selectReciteTime(String tableName, int id) {
+        Result result = new Result();
+        int time = wordDao.selectReciteTime(tableName,id);
+        result.setData(time);
+        result.setMsg("查询成功");
+        result.setStatus(0);
+        return result;
+    }
+
 
     @Override
     public Result setForgetTime(String tableName, int time, int id) {
         Result result = new Result();
         wordDao.setForgetTime(tableName,time,id);
+        result.setMsg("更新成功");
+        result.setStatus(0);
+        return result;
+    }
+    @Override
+    public Result setReciteTime(String tableName, int time, int id) {
+        Result result = new Result();
+        wordDao.setReciteTime(tableName,time,id);
         result.setMsg("更新成功");
         result.setStatus(0);
         return result;
@@ -78,4 +106,8 @@ public class WordServiceImpl implements WordService {
         result.setData(wordList);
         return result;
     }
+
+
+
+
 }

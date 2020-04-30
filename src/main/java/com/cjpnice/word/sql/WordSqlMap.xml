@@ -11,21 +11,24 @@
 		CREATE TABLE IF NOT EXISTS ${tableName} (
 			  id int(10) unsigned NOT NULL AUTO_INCREMENT,
 			  word varchar(255) NOT NULL,
-			  translation varchar(255) NOT NULL,
+			  translation varchar(1000) NOT NULL,
 			  phonogram varchar(255) NOT NULL,
 			  forgetTime int(11) DEFAULT '0',
 			  isRemember int(11) DEFAULT '0',
 			  reciteTime int(11) DEFAULT '0',
-			  exampleSentence varchar(255) DEFAULT NULL,
+			  exampleSentence varchar(1000) DEFAULT NULL,
 			  PRIMARY KEY (id)
 		)ENGINE=InnoDB DEFAULT CHARSET=utf8;
 	</update>
 
 	<!--查询单词-->
-	<select id="selectWord" resultMap="wordMap">
-		SELECT * from ${tableName} WHERE isRemember=0 LIMIT #{wordNum}
+	<select id="getForgetWord" resultMap="wordMap">
+		SELECT * from ${tableName} WHERE isRemember=0 ORDER BY RAND() LIMIT #{wordNum}
 	</select>
-
+	<!--查询单词-->
+	<select id="getRememberWord" resultMap="wordMap">
+		SELECT * from ${tableName} WHERE isRemember=1 ORDER BY RAND() LIMIT #{wordNum}
+	</select>
 
 	<!--设置单词为已经记住-->
 	<update id="setIsRemember">
@@ -37,9 +40,18 @@
 		update ${tableName} set forgetTime=#{time} where id=#{id}
 	</update>
 
+	<!--设置单词背诵次数-->
+	<update id="setReciteTime">
+		update ${tableName} set reciteTime=#{time} where id=#{id}
+	</update>
+
 	<!--查询单词忘记次数-->
 	<select id="selectForgetTime" resultType="int">
 		select forgetTime from ${tableName} where id=#{id}
+	</select>
+	<!--查询单词背诵次数-->
+	<select id="selectReciteTime" resultType="int">
+		select reciteTime from ${tableName} where id=#{id}
 	</select>
 
 	<!--查询忘记的单词，按照forgetTime降序-->

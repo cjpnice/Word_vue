@@ -1,6 +1,7 @@
 package com.cjpnice.word.controller;
 
 
+import com.cjpnice.word.entity.Word;
 import com.cjpnice.word.service.WordService;
 import com.cjpnice.word.util.Result;
 import org.springframework.stereotype.Controller;
@@ -9,6 +10,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 
 @Controller
@@ -20,8 +24,25 @@ public class WordController {
     @ResponseBody
     public Result getWord(int userId, int wordNum){
         Result result = new Result();
+        List<Word> wordList = new ArrayList<>();
         String tableName = "wordList"+userId;
-        result = wordService.selectWord(tableName,wordNum);
+        int forgetWordNum = wordNum/2;
+        int rememberWordNum = wordNum-wordNum/2;
+        List<Word> forgetWordlist = (List<Word>) wordService.getForgetWord(tableName, forgetWordNum).getData();
+        List<Word> rememberWordlist = (List<Word>) wordService.getRememberWord(tableName,rememberWordNum).getData();
+        //防止刚开始记住的单词太少，查询不到，所以如果查询的数量少于一半，则再次插叙不会的填充进list
+        if(rememberWordlist.size()<rememberWordNum){
+            wordList.addAll(rememberWordlist);
+            wordList.addAll(forgetWordlist);
+            forgetWordlist = (List<Word>) wordService.getForgetWord(tableName, rememberWordNum-rememberWordlist.size()).getData();
+            wordList.addAll(forgetWordlist);
+        }else{
+            wordList.addAll(rememberWordlist);
+            wordList.addAll(forgetWordlist);
+        }
+        //打乱单词顺序
+        Collections.shuffle(wordList);
+        result.setData(wordList);
         return result;
     }
     @RequestMapping(value = "/setIsRemember",method= RequestMethod.POST)
@@ -39,6 +60,15 @@ public class WordController {
         String tableName = "wordList"+userId;
         int time = (int) wordService.selectForgetTime(tableName,id).getData()+1;
         result = wordService.setForgetTime(tableName,time,id);
+        return result;
+    }
+    @RequestMapping(value = "/setReciteTime",method= RequestMethod.POST)
+    @ResponseBody
+    public Result setReciteTime(int userId, int id){
+        Result result = new Result();
+        String tableName = "wordList"+userId;
+        int time = (int) wordService.selectReciteTime(tableName,id).getData()+1;
+        result = wordService.setReciteTime(tableName,time,id);
         return result;
     }
     @RequestMapping(value = "/getForgetWord",method= RequestMethod.POST)

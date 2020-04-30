@@ -32,6 +32,10 @@
 		update user set wordNum=#{wordNum} where userId=#{userId}
 	</update>
 
+	<!--设置今天已经背过-->
+	<update id="setTodayIsRecite" >
+		update user set todayIsRecite=1 where userId=#{userId}
+	</update>
 
 
 </mapper>
