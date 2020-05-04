@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 
 @Controller
@@ -24,7 +25,7 @@ public class UserController {
     WordService wordService;
     @RequestMapping(value = "/login",method= RequestMethod.POST)
     @ResponseBody
-    public Result login(String username, String password, HttpServletRequest request){
+    public Result login(String username, String password, HttpServletResponse resp){
 //        String requestToken = request.getHeader("Authorization");
 //        if(requestToken!=null){
 //            boolean result = TokenSign.verify(requestToken);
@@ -36,7 +37,7 @@ public class UserController {
 //
 //            }
 //        }
-
+        resp.setHeader("Access-Control-Allow-Origin", "*");
         ByteString passwordByteString = ByteString.encodeUtf8(password);
         String passwordMd5 = passwordByteString.md5().hex();
         Result result = userService.selectUserByNameAndPassword(username,passwordMd5);
@@ -56,8 +57,9 @@ public class UserController {
 
     @RequestMapping(value = "/register",method= RequestMethod.POST)
     @ResponseBody
-    public Result register(String username,String password,String email){
+    public Result register(String username,String password,String email, HttpServletResponse resp){
         Result result = new Result();
+        resp.setHeader("Access-Control-Allow-Origin", "*");
         User oldUser = (User) userService.selectUserByName(username).getData();
         //判断用户名是否已经存在
         if(oldUser == null){
@@ -83,16 +85,18 @@ public class UserController {
 
     @RequestMapping(value = "/setWordNum",method= RequestMethod.POST)
     @ResponseBody
-    public Result setWordNum(int wordNum,int userId){
+    public Result setWordNum(int wordNum,int userId, HttpServletResponse resp){
         Result result = new Result();
+        resp.setHeader("Access-Control-Allow-Origin", "*");
         result = userService.setWordNum(wordNum,userId);
         return result;
     }
 
     @RequestMapping(value = "/setTodayIsRecite",method= RequestMethod.POST)
     @ResponseBody
-    public Result setTodayIsRecite(int userId){
+    public Result setTodayIsRecite(int userId, HttpServletResponse resp){
         Result result = new Result();
+        resp.setHeader("Access-Control-Allow-Origin", "*");
         result = userService.setTodayIsRecite(userId);
         return result;
     }
