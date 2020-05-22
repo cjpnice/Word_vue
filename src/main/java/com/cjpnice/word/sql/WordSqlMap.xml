@@ -4,7 +4,8 @@
  
 <mapper namespace="com.cjpnice.word.dao.WordDao">
 	<!-- 缓存配置-->
-	<cache eviction="LRU" flushInterval="30000" size="512" readOnly="true"/>
+<!--	缓存会影响随机查询，暂时不用-->
+<!--	<cache eviction="LRU" flushInterval="30000" size="512" readOnly="true"/>-->
 
 	<!--创建用户单词表-->
 	<update id="createNewTable" parameterType="String">
@@ -58,7 +59,6 @@
 	<select id="selectForgetWord" resultMap="wordMap">
 		SELECT * from ${tableName} where forgetTime>0 ORDER BY forgetTime DESC
 	</select>
-
 
 	<resultMap type="com.cjpnice.word.entity.Word" id="wordMap">
 		<id property="id" column="id"/>

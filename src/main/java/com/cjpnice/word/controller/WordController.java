@@ -39,6 +39,9 @@ public class WordController {
             wordList.addAll(forgetWordlist);
         }else{
             List<Word> forgetWordlist = (List<Word>) wordService.getForgetWord(tableName, forgetWordNum).getData();
+            if(forgetWordlist.size()<forgetWordNum){
+                rememberWordlist = (List<Word>) wordService.getRememberWord(tableName,wordNum-forgetWordlist.size()).getData();
+            }
             wordList.addAll(rememberWordlist);
             wordList.addAll(forgetWordlist);
         }
